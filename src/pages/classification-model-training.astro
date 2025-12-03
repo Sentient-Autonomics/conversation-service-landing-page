@@ -1,0 +1,422 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Classification Model Training | Conversation Service">
+  <div class="min-h-screen bg-gray-50">
+    <header class="bg-white shadow-sm border-b border-gray-200">
+      <div class="container mx-auto px-6 py-4 max-w-7xl">
+        <div class="flex items-center space-x-4">
+          <a href="/" class="text-gray-600 hover:text-gray-900 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+          </a>
+          <h1 class="text-2xl font-display font-bold text-gray-900">Classification Model Training</h1>
+        </div>
+      </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-8 max-w-7xl">
+      <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-8">
+        <h2 class="text-lg font-semibold text-blue-900 mb-2">Model Evaluation Dashboard</h2>
+        <p class="text-blue-800 text-sm leading-relaxed">
+          Performance analysis of classification models trained on annotated Indonesian banking conversations.
+          Select a model to view its confusion matrix and detailed metrics.
+        </p>
+      </div>
+
+      <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+        <div class="flex flex-wrap gap-3" id="model-buttons"></div>
+      </div>
+
+      <div class="grid lg:grid-cols-3 gap-8">
+        <div class="lg:col-span-2 bg-white rounded-xl shadow-lg overflow-hidden">
+          <div class="bg-gradient-to-r from-purple-500 to-pink-500 px-6 py-4">
+            <h3 class="text-lg font-semibold text-white" id="matrix-title">Select a model</h3>
+          </div>
+          <div class="p-6">
+            <div id="confusion-matrix" class="overflow-x-auto"></div>
+            <div class="mt-6 p-4 bg-gray-50 rounded-lg" id="legend" style="display: none;">
+              <div class="text-sm font-semibold text-gray-700 mb-2">Cell Color Scale</div>
+              <div class="flex items-center gap-2">
+                <div class="flex-1 h-6 rounded" id="legend-bar"></div>
+              </div>
+              <div class="flex justify-between text-xs text-gray-600 mt-1">
+                <span>Low</span><span>High</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+          <div class="bg-gradient-to-r from-green-500 to-cyan-500 px-6 py-4">
+            <h3 class="text-lg font-semibold text-white">Performance Metrics</h3>
+          </div>
+          <div id="metrics-content" class="p-6">
+            <div class="text-center text-gray-400 py-12"><p>Select a model</p></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Model Details Section -->
+      <div class="mt-8 bg-white rounded-xl shadow-lg overflow-hidden" id="model-details-section" style="display: none;">
+        <div class="bg-gradient-to-r from-purple-600 to-blue-600 px-6 py-4">
+          <h3 class="text-lg font-semibold text-white">Model Configuration & Training Details</h3>
+        </div>
+        <div class="p-6">
+          <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+            <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-4 rounded-lg border border-blue-200">
+              <div class="text-xs font-semibold text-blue-600 uppercase mb-1">Overall Accuracy</div>
+              <div class="text-2xl font-bold text-blue-900" id="detail-accuracy">-</div>
+            </div>
+            <div class="bg-gradient-to-br from-green-50 to-green-100 p-4 rounded-lg border border-green-200">
+              <div class="text-xs font-semibold text-green-600 uppercase mb-1">Best Iteration</div>
+              <div class="text-2xl font-bold text-green-900" id="detail-iteration">-</div>
+            </div>
+            <div class="bg-gradient-to-br from-purple-50 to-purple-100 p-4 rounded-lg border border-purple-200">
+              <div class="text-xs font-semibold text-purple-600 uppercase mb-1">Validation Loss</div>
+              <div class="text-2xl font-bold text-purple-900" id="detail-val-loss">-</div>
+            </div>
+            <div class="bg-gradient-to-br from-orange-50 to-orange-100 p-4 rounded-lg border border-orange-200">
+              <div class="text-xs font-semibold text-orange-600 uppercase mb-1">Model Type</div>
+              <div class="text-lg font-bold text-orange-900" id="detail-model-type">-</div>
+            </div>
+          </div>
+
+          <div class="bg-gray-50 rounded-lg p-4">
+            <div class="flex items-center justify-between mb-3">
+              <h4 class="font-semibold text-gray-800">Hyperparameters</h4>
+              <button onclick="window.toggleModelHyperparams()" class="text-sm text-blue-600 hover:text-blue-700 font-medium">
+                <span id="hyperparam-toggle-text">Show Details ▼</span>
+              </button>
+            </div>
+            <div id="hyperparams-grid" class="hidden grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+              <!-- Hyperparameters will be populated here -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div id="tooltip" style="display: none; position: absolute; background: rgba(0,0,0,0.9); color: white; padding: 12px; border-radius: 6px; pointer-events: none; font-size: 14px; z-index: 1000; box-shadow: 0 4px 6px rgba(0,0,0,0.3);"></div>
+
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script is:inline>
+    let data = null;
+    let currentModel = null;
+    let modelAccuracyData = {};
+
+    window.toggleModelHyperparams = function() {
+      const grid = document.getElementById('hyperparams-grid');
+      const toggleText = document.getElementById('hyperparam-toggle-text');
+      grid.classList.toggle('hidden');
+      toggleText.textContent = grid.classList.contains('hidden') ? 'Show Details ▼' : 'Hide Details ▲';
+    };
+
+    async function loadData() {
+      try {
+        const response = await fetch('/conversation-service-landing/data/confusion_matrices.json');
+        data = await response.json();
+        
+        // Load model accuracy data
+        const accuracyResponse = await fetch('/conversation-service-landing/data/model_accuracy.json');
+        const accuracyData = await accuracyResponse.json();
+        accuracyData.models.forEach(model => {
+          modelAccuracyData[model.name] = model;
+        });
+        
+        renderModelButtons();
+        if (data.models.length > 0) selectModel(0);
+      } catch (error) {
+        console.error('Error loading data:', error);
+      }
+    }
+
+    function renderModelButtons() {
+      const container = document.getElementById('model-buttons');
+      container.innerHTML = data.models.map((model, idx) => `
+        <button class="px-4 py-2 border-2 rounded-lg transition-all font-medium text-sm
+                       ${idx === 0 ? 'border-purple-500 bg-purple-500 text-white' : 'border-gray-300 text-gray-700 hover:border-purple-500 hover:bg-purple-50'}"
+                data-index="${idx}">
+          ${model.model_name}
+        </button>
+      `).join('');
+
+      container.querySelectorAll('button').forEach(btn => {
+        btn.addEventListener('click', () => selectModel(parseInt(btn.dataset.index)));
+      });
+    }
+
+    function selectModel(index) {
+      currentModel = data.models[index];
+      
+      document.querySelectorAll('#model-buttons button').forEach((btn, idx) => {
+        if (idx === index) {
+          btn.className = 'px-4 py-2 border-2 rounded-lg transition-all font-medium text-sm border-purple-500 bg-purple-500 text-white';
+        } else {
+          btn.className = 'px-4 py-2 border-2 rounded-lg transition-all font-medium text-sm border-gray-300 text-gray-700 hover:border-purple-500 hover:bg-purple-50';
+        }
+      });
+
+      renderConfusionMatrix();
+      renderMetrics();
+      renderModelDetails();
+    }
+
+    function renderModelDetails() {
+      const modelName = currentModel.model_name;
+      
+      // Map confusion matrix model names to accuracy data model names
+      const nameMapping = {
+        'Intent Classification': 'intent',
+        'intent': 'intent',
+        'Function for Outcome': 'function_for_outcome',
+        'function_for_outcome': 'function_for_outcome',
+        'Conversation Stage': 'conversation_stage',
+        'conversation_stage': 'conversation_stage',
+        'Is Continuation': 'is_continuation',
+        'is_continuation': 'is_continuation',
+        'Cluster Label': 'cluster_label',
+        'cluster_label': 'cluster_label',
+        'cluster': 'cluster_label'
+      };
+      
+      const mappedName = nameMapping[modelName] || modelName.toLowerCase().replace(/\s+/g, '_');
+      const modelInfo = modelAccuracyData[mappedName];
+      
+      const detailsSection = document.getElementById('model-details-section');
+      
+      if (!modelInfo || modelInfo.overall_accuracy === null) {
+        detailsSection.style.display = 'none';
+        return;
+      }
+      
+      detailsSection.style.display = 'block';
+      
+      // Populate overview metrics
+      document.getElementById('detail-accuracy').textContent = 
+        (modelInfo.overall_accuracy * 100).toFixed(2) + '%';
+      document.getElementById('detail-iteration').textContent = modelInfo.best_iteration || '-';
+      document.getElementById('detail-val-loss').textContent = 
+        modelInfo.validation_loss ? modelInfo.validation_loss.toFixed(6) : '-';
+      document.getElementById('detail-model-type').textContent = modelInfo.model_type || '-';
+      
+      // Populate hyperparameters
+      const hyperparamsGrid = document.getElementById('hyperparams-grid');
+      if (modelInfo.hyperparameters && Object.keys(modelInfo.hyperparameters).length > 0) {
+        hyperparamsGrid.innerHTML = Object.entries(modelInfo.hyperparameters)
+          .map(([key, value]) => `
+            <div class="bg-white p-3 rounded border border-gray-200">
+              <div class="text-xs text-gray-500 mb-1">${key.replace(/_/g, ' ')}</div>
+              <div class="text-sm font-semibold text-gray-900">${value}</div>
+            </div>
+          `).join('');
+      } else {
+        hyperparamsGrid.innerHTML = '<div class="col-span-full text-center text-gray-500 text-sm">No hyperparameters available</div>';
+      }
+    }
+
+    function renderConfusionMatrix() {
+      const container = document.getElementById('confusion-matrix');
+      container.innerHTML = '';
+      
+      const classes = currentModel.classes;
+      const matrix = currentModel.matrix;
+      
+      document.getElementById('matrix-title').textContent = `${currentModel.model_name} Confusion Matrix`;
+
+      const maxCellSize = 70;
+      const minCellSize = 30;
+      const cellSize = Math.max(minCellSize, Math.min(maxCellSize, 600 / classes.length));
+      
+      const margin = { top: 100, right: 80, bottom: 60, left: 120 };
+      const width = classes.length * cellSize + margin.left + margin.right;
+      const height = classes.length * cellSize + margin.top + margin.bottom;
+
+      const svg = d3.select(container)
+        .append('svg')
+        .attr('width', width)
+        .attr('height', height);
+
+      const maxCount = d3.max(matrix, d => d.count) || 1;
+      const colorScale = d3.scaleSequential()
+        .domain([0, maxCount])
+        .interpolator(d3.interpolateBlues);
+
+      const g = svg.append('g')
+        .attr('transform', `translate(${margin.left},${margin.top})`);
+
+      const truncateText = (text, maxLength = 15) => {
+        const cleaned = text.replace(/_/g, ' ');
+        return cleaned.length > maxLength ? cleaned.substring(0, maxLength) + '...' : cleaned;
+      };
+
+      g.selectAll('.matrix-cell')
+        .data(matrix)
+        .join('rect')
+        .attr('x', d => classes.indexOf(d.predicted_label) * cellSize)
+        .attr('y', d => classes.indexOf(d.true_label) * cellSize)
+        .attr('width', cellSize - 2)
+        .attr('height', cellSize - 2)
+        .attr('fill', d => d.count > 0 ? colorScale(d.count) : '#f5f5f5')
+        .attr('stroke', 'white')
+        .attr('stroke-width', 2)
+        .style('cursor', 'pointer')
+        .on('mouseover', showTooltip)
+        .on('mousemove', moveTooltip)
+        .on('mouseout', hideTooltip);
+
+      g.selectAll('.cell-text')
+        .data(matrix)
+        .join('text')
+        .attr('x', d => classes.indexOf(d.predicted_label) * cellSize + cellSize / 2)
+        .attr('y', d => classes.indexOf(d.true_label) * cellSize + cellSize / 2)
+        .attr('text-anchor', 'middle')
+        .attr('dominant-baseline', 'middle')
+        .attr('font-size', `${Math.min(14, cellSize * 0.3)}px`)
+        .attr('font-weight', 'bold')
+        .attr('fill', d => d.count > maxCount * 0.6 ? 'white' : '#333')
+        .attr('pointer-events', 'none')
+        .text(d => d.count || '');
+
+      g.selectAll('.y-label')
+        .data(classes)
+        .join('text')
+        .attr('class', 'y-label')
+        .attr('x', -10)
+        .attr('y', (d, i) => i * cellSize + cellSize / 2)
+        .attr('text-anchor', 'end')
+        .attr('dominant-baseline', 'middle')
+        .attr('font-size', '11px')
+        .style('cursor', 'pointer')
+        .text(d => truncateText(d))
+        .append('title')
+        .text(d => d.replace(/_/g, ' '));
+
+      g.selectAll('.x-label')
+        .data(classes)
+        .join('text')
+        .attr('class', 'x-label')
+        .attr('x', (d, i) => i * cellSize + cellSize / 2)
+        .attr('y', -10)
+        .attr('text-anchor', 'start')
+        .attr('dominant-baseline', 'middle')
+        .attr('font-size', '11px')
+        .attr('transform', (d, i) => 
+          `rotate(-90, ${i * cellSize + cellSize / 2}, -10)`)
+        .style('cursor', 'pointer')
+        .text(d => truncateText(d))
+        .append('title')
+        .text(d => d.replace(/_/g, ' '));
+
+      svg.append('text')
+        .attr('x', margin.left + (classes.length * cellSize) / 2)
+        .attr('y', margin.top + classes.length * cellSize + 40)
+        .attr('text-anchor', 'middle')
+        .attr('font-weight', '600')
+        .attr('font-size', '14px')
+        .text('Predicted Label');
+
+      svg.append('text')
+        .attr('x', margin.left + classes.length * cellSize + 60)
+        .attr('y', margin.top + (classes.length * cellSize) / 2)
+        .attr('text-anchor', 'middle')
+        .attr('font-weight', '600')
+        .attr('font-size', '14px')
+        .attr('transform', `rotate(-90, ${margin.left + classes.length * cellSize + 60}, ${margin.top + (classes.length * cellSize) / 2})`)
+        .text('True Label');
+
+      document.getElementById('legend').style.display = 'block';
+      document.getElementById('legend-bar').style.background = 
+        `linear-gradient(to right, ${colorScale(0)}, ${colorScale(maxCount)})`;
+    }
+
+    function renderMetrics() {
+      const container = document.getElementById('metrics-content');
+      
+      // Get accuracy from model_accuracy.json
+      const modelName = currentModel.model_name;
+      const nameMapping = {
+        'Intent Classification': 'intent',
+        'Function for Outcome': 'function_for_outcome',
+        'Conversation Stage': 'conversation_stage',
+        'Is Continuation': 'is_continuation',
+        'Cluster Label': 'cluster_label'
+      };
+      
+      const mappedName = nameMapping[modelName] || modelName.toLowerCase().replace(/\s+/g, '_');
+      const modelInfo = modelAccuracyData[mappedName];
+      
+      const metrics = currentModel.metrics;
+      const classMetrics = currentModel.class_metrics.slice().sort((a, b) => b.f1_score - a.f1_score);
+
+      container.innerHTML = `
+        <div class="space-y-4 mb-6 pb-6 border-b">
+          <div class="bg-gradient-to-r from-purple-500 to-pink-500 p-4 rounded-lg text-white">
+            <div class="text-sm opacity-90">Overall Accuracy</div>
+            <div class="text-3xl font-bold">${modelInfo && modelInfo.overall_accuracy ? (modelInfo.overall_accuracy * 100).toFixed(1) : (metrics.accuracy * 100).toFixed(1)}%</div>
+            <div class="text-xs opacity-75 mt-1">${metrics.correct_predictions} / ${metrics.total_samples} correct</div>
+          </div>
+        </div>
+        
+        <h4 class="font-semibold mb-3">Per-Class Metrics</h4>
+        <div class="overflow-x-auto max-h-96 overflow-y-auto">
+          <table class="w-full text-sm">
+            <thead class="bg-gray-100 sticky top-0">
+              <tr>
+                <th class="text-left p-2 font-semibold">Class</th>
+                <th class="text-center p-2 font-semibold">Precision</th>
+                <th class="text-center p-2 font-semibold">Recall</th>
+                <th class="text-center p-2 font-semibold">F1</th>
+                <th class="text-center p-2 font-semibold">Support</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${classMetrics.map((cm, idx) => `
+                <tr class="${idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}">
+                  <td class="p-2 font-medium">${cm.class.replace(/_/g, ' ')}</td>
+                  <td class="p-2 text-center">${(cm.precision * 100).toFixed(1)}%</td>
+                  <td class="p-2 text-center">${(cm.recall * 100).toFixed(1)}%</td>
+                  <td class="p-2 text-center">${(cm.f1_score * 100).toFixed(1)}%</td>
+                  <td class="p-2 text-center">${cm.support}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    }
+
+    function showTooltip(event, d) {
+      const tooltip = document.getElementById('tooltip');
+      const rowTotal = currentModel.matrix
+        .filter(m => m.true_label === d.true_label)
+        .reduce((sum, m) => sum + m.count, 0);
+      
+      const percentage = rowTotal > 0 ? ((d.count / rowTotal) * 100).toFixed(1) : '0.0';
+      const isCorrect = d.true_label === d.predicted_label;
+      
+      tooltip.innerHTML = `
+        <div style="margin-bottom: 4px;"><strong>${isCorrect ? '✓ Correct' : '✗ Incorrect'}</strong></div>
+        <div>True: ${d.true_label.replace(/_/g, ' ')}</div>
+        <div>Predicted: ${d.predicted_label.replace(/_/g, ' ')}</div>
+        <div>Count: ${d.count} (${percentage}%)</div>
+      `;
+      tooltip.style.display = 'block';
+    }
+
+    function moveTooltip(event) {
+      const tooltip = document.getElementById('tooltip');
+      tooltip.style.left = (event.pageX + 15) + 'px';
+      tooltip.style.top = (event.pageY - 15) + 'px';
+    }
+
+    function hideTooltip() {
+      document.getElementById('tooltip').style.display = 'none';
+    }
+
+    loadData();
+  </script>
+</Layout>

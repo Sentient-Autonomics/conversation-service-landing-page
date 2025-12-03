@@ -1,0 +1,653 @@
+{
+  "data": [
+    {
+      "pattern": "function_for_outcome=establish_contact + cluster=repeated_greeting",
+      "unified_score": 0.7760357984144693,
+      "pmi": 3.5268457929862658,
+      "coherence": 0.9999999999999999,
+      "support": 0.012697800077190274,
+      "chi2": 4094.132400139649
+    },
+    {
+      "pattern": "function_for_outcome=establish_contact + cluster=initiate_call",
+      "unified_score": 0.7756781480848713,
+      "pmi": 3.568363369909887,
+      "coherence": 0.9999999999999997,
+      "support": 0.010613662678502509,
+      "chi2": 3515.2236898698548
+    },
+    {
+      "pattern": "function_for_outcome=confirm_interest + cluster=express_agreement",
+      "unified_score": 0.7411853789932463,
+      "pmi": 3.951083025062631,
+      "coherence": 0.9075919328278591,
+      "support": 0.011539945966808181,
+      "chi2": 4924.918705428311
+    },
+    {
+      "pattern": "is_continuation=false + function_for_outcome=establish_contact",
+      "unified_score": 0.7136792568695265,
+      "pmi": 2.596124963776304,
+      "coherence": 0.9018563653338153,
+      "support": 0.03604785796989579,
+      "chi2": 693.1439013530628
+    },
+    {
+      "pattern": "intent=closing + function_for_outcome=close_conversation",
+      "unified_score": 0.6689306995793138,
+      "pmi": 4.214271364159308,
+      "coherence": 0.7441089538067063,
+      "support": 0.01617136240833655,
+      "chi2": 8148.770874891487
+    },
+    {
+      "pattern": "function_for_outcome=no_function + cluster=confirm_agreement",
+      "unified_score": 0.6587813803395519,
+      "pmi": 0.6586641940067319,
+      "coherence": 0.9572257543807347,
+      "support": 0.01273639521420301,
+      "chi2": 1143.4276127583312
+    },
+    {
+      "pattern": "function_for_outcome=handle_rejection + domain_outcome=customer_rejected",
+      "unified_score": 0.6530706821888554,
+      "pmi": 1.444987541099495,
+      "coherence": 0.5986255484485346,
+      "support": 0.19818602856040138,
+      "chi2": 167.55276892752443
+    },
+    {
+      "pattern": "intent=rejection + function_for_outcome=handle_rejection",
+      "unified_score": 0.6417721303713028,
+      "pmi": 1.8166565346214576,
+      "coherence": 0.6412303206354247,
+      "support": 0.14322655345426477,
+      "chi2": 281.49516002379136
+    },
+    {
+      "pattern": "function_for_outcome=close_conversation + conversation_stage=apologize_end",
+      "unified_score": 0.6193059632398398,
+      "pmi": 2.500217101085168,
+      "coherence": 0.7617632460670786,
+      "support": 0.013817059050559629,
+      "chi2": 2507.504703020735
+    },
+    {
+      "pattern": "intent=confirmation + function_for_outcome=confirm_interest",
+      "unified_score": 0.604464122313092,
+      "pmi": 1.618072346555123,
+      "coherence": 0.7376622828657902,
+      "support": 0.046159783867232726,
+      "chi2": 733.4418504494785
+    },
+    {
+      "pattern": "function_for_outcome=handle_rejection + cluster=defer_action",
+      "unified_score": 0.60153059103679,
+      "pmi": 1.8904059720613937,
+      "coherence": 0.7702442155265142,
+      "support": 0.01146275569278271,
+      "chi2": 1422.4662308580562
+    },
+    {
+      "pattern": "function_for_outcome=handle_rejection + cluster=decline_interest",
+      "unified_score": 0.5986914965639989,
+      "pmi": 1.8895426957231607,
+      "coherence": 0.7622908824210834,
+      "support": 0.013045156310304902,
+      "chi2": 1615.323636435129
+    },
+    {
+      "pattern": "function_for_outcome=schedule_callback + cluster=schedule_callback",
+      "unified_score": 0.5911958995060872,
+      "pmi": 4.301976382538153,
+      "coherence": 0.5963149180049655,
+      "support": 0.011424160555769973,
+      "chi2": 6142.033282302725
+    },
+    {
+      "pattern": "function_for_outcome=provide_information + cluster=read_id_numbers",
+      "unified_score": 0.5872973415146616,
+      "pmi": 1.8081038087790833,
+      "coherence": 0.7061775890817642,
+      "support": 0.03759166345040525,
+      "chi2": 1392.2321282324922
+    },
+    {
+      "pattern": "is_continuation=true + function_for_outcome=no_function",
+      "unified_score": 0.585951138421517,
+      "pmi": 0.018943419558629722,
+      "coherence": 0.6442445185051435,
+      "support": 0.1458896179081436,
+      "chi2": 24.47682438904972
+    },
+    {
+      "pattern": "function_for_outcome=handle_rejection + conversation_stage=apologize_end",
+      "unified_score": 0.5823472531459752,
+      "pmi": 1.7978812769623334,
+      "coherence": 0.6433277799225046,
+      "support": 0.07124662292551139,
+      "chi2": 487.69541019788215
+    },
+    {
+      "pattern": "intent=confirmation + function_for_outcome=provide_information",
+      "unified_score": 0.5820426009466397,
+      "pmi": 0.41157351047971386,
+      "coherence": 0.673635167710307,
+      "support": 0.1072172906213817,
+      "chi2": 101.94601816346078
+    },
+    {
+      "pattern": "function_for_outcome=confirm_interest + conversation_stage=clarify_continue",
+      "unified_score": 0.5739909628459678,
+      "pmi": 0.9763592480647202,
+      "coherence": 0.7307664956716937,
+      "support": 0.03940563489000386,
+      "chi2": 324.97578727590724
+    },
+    {
+      "pattern": "intent=question_information + function_for_outcome=answer_question",
+      "unified_score": 0.5712245929029046,
+      "pmi": 2.176664767188644,
+      "coherence": 0.5609951244472571,
+      "support": 0.09413353917406407,
+      "chi2": 548.040628870721
+    },
+    {
+      "pattern": "function_for_outcome=answer_question + cluster=discuss_tenor_options",
+      "unified_score": 0.5708138873154203,
+      "pmi": 2.0300443393634784,
+      "coherence": 0.6924746455662852,
+      "support": 0.017483597066769586,
+      "chi2": 2440.547572684685
+    },
+    {
+      "pattern": "function_for_outcome=establish_contact + conversation_stage=introduction",
+      "unified_score": 0.5638311009016572,
+      "pmi": 2.084300886735566,
+      "coherence": 0.6837823880295464,
+      "support": 0.012350443844075647,
+      "chi2": 1852.5842469463348
+    },
+    {
+      "pattern": "is_continuation=true + function_for_outcome=confirm_interest",
+      "unified_score": 0.5485700880872151,
+      "pmi": 0.09952168568196791,
+      "coherence": 0.7246177067887573,
+      "support": 0.04762639907371671,
+      "chi2": 167.54303063901
+    },
+    {
+      "pattern": "function_for_outcome=schedule_callback + domain_outcome=call_interrupted",
+      "unified_score": 0.5393186579395376,
+      "pmi": 2.820185126528744,
+      "coherence": 0.5882293332724011,
+      "support": 0.013160941721343111,
+      "chi2": 2864.8088777285498
+    },
+    {
+      "pattern": "function_for_outcome=provide_information + conversation_stage=continue_conversation",
+      "unified_score": 0.5346848861322661,
+      "pmi": 0.4604415055348748,
+      "coherence": 0.6213318710532048,
+      "support": 0.08097259745272095,
+      "chi2": 169.00992743476166
+    },
+    {
+      "pattern": "function_for_outcome=answer_question + conversation_stage=clarify_continue",
+      "unified_score": 0.5334886585417739,
+      "pmi": 0.8889457778952381,
+      "coherence": 0.5485157114695437,
+      "support": 0.10787340795059823,
+      "chi2": 204.52644544650173
+    },
+    {
+      "pattern": "function_for_outcome=answer_question + domain_outcome=information_provided",
+      "unified_score": 0.527885717930688,
+      "pmi": 0.5907422419334061,
+      "coherence": 0.545321826867426,
+      "support": 0.11501350829795445,
+      "chi2": 56.5120379729721
+    },
+    {
+      "pattern": "function_for_outcome=provide_information + cluster=dictate_spelling",
+      "unified_score": 0.5271813057609207,
+      "pmi": 1.6611181398840928,
+      "coherence": 0.6427910357692446,
+      "support": 0.010729448089540718,
+      "chi2": 1195.2229679852867
+    },
+    {
+      "pattern": "function_for_outcome=handle_rejection + cluster=discuss_product_terms",
+      "unified_score": 0.5195692731354239,
+      "pmi": 0.49448753431382136,
+      "coherence": 0.584272140609785,
+      "support": 0.08456194519490544,
+      "chi2": 102.54266698346557
+    },
+    {
+      "pattern": "is_continuation=true + function_for_outcome=establish_contact",
+      "unified_score": 0.5146507268688398,
+      "pmi": -0.7679464790149655,
+      "coherence": 0.7224100057762618,
+      "support": 0.04280200694712466,
+      "chi2": 127.68434458510079
+    },
+    {
+      "pattern": "intent=closing + function_for_outcome=handle_rejection",
+      "unified_score": 0.5123202210505367,
+      "pmi": 0.6442114115845538,
+      "coherence": 0.6780085485502719,
+      "support": 0.011424160555769973,
+      "chi2": 979.2150545681637
+    },
+    {
+      "pattern": "intent=unknown + function_for_outcome=no_function",
+      "unified_score": 0.5107844950836831,
+      "pmi": 1.4833427344373693,
+      "coherence": 0.6192709828583987,
+      "support": 0.012774990351215747,
+      "chi2": 1433.8811124469587
+    },
+    {
+      "pattern": "function_for_outcome=handle_rejection + conversation_stage=clarify_continue",
+      "unified_score": 0.5078486260914423,
+      "pmi": -0.08899486794698634,
+      "coherence": 0.5891862105290058,
+      "support": 0.0906599768429178,
+      "chi2": 38.21195546614114
+    },
+    {
+      "pattern": "function_for_outcome=no_function + domain_outcome=information_provided",
+      "unified_score": 0.5070329284229794,
+      "pmi": -0.39317059203641674,
+      "coherence": 0.6485728380241305,
+      "support": 0.06476263990737167,
+      "chi2": 55.91993034504013
+    },
+    {
+      "pattern": "intent=rejection + function_for_outcome=provide_information",
+      "unified_score": 0.48952860613388705,
+      "pmi": -1.6959999467054576,
+      "coherence": 0.7795186324296681,
+      "support": 0.013971439598610575,
+      "chi2": 135.40916450364045
+    },
+    {
+      "pattern": "intent=question_information + function_for_outcome=no_function",
+      "unified_score": 0.47925252288760434,
+      "pmi": -0.35116924505487895,
+      "coherence": 0.6670489435151977,
+      "support": 0.018178309532998843,
+      "chi2": 110.62077504350938
+    },
+    {
+      "pattern": "function_for_outcome=no_function + domain_outcome=customer_interested",
+      "unified_score": 0.4761893423833725,
+      "pmi": 0.5816887603226005,
+      "coherence": 0.6052586940199942,
+      "support": 0.01586260131223466,
+      "chi2": 1386.6721101704723
+    },
+    {
+      "pattern": "function_for_outcome=clarify_confusion + conversation_stage=clarify_continue",
+      "unified_score": 0.4717080970737202,
+      "pmi": 1.0918708044236656,
+      "coherence": 0.5684212003938345,
+      "support": 0.013122346584330374,
+      "chi2": 1088.216707064387
+    },
+    {
+      "pattern": "intent=objection + function_for_outcome=handle_rejection",
+      "unified_score": 0.46041969059866544,
+      "pmi": 0.9135053090231502,
+      "coherence": 0.5351657193176742,
+      "support": 0.02740254727904284,
+      "chi2": 245.0672361447089
+    },
+    {
+      "pattern": "function_for_outcome=schedule_callback + conversation_stage=clarify_continue",
+      "unified_score": 0.455710408581093,
+      "pmi": 0.35776169366972715,
+      "coherence": 0.581028801862796,
+      "support": 0.015283674257043613,
+      "chi2": 1103.931127459048
+    },
+    {
+      "pattern": "function_for_outcome=answer_question + cluster=discuss_product_terms",
+      "unified_score": 0.455227788964888,
+      "pmi": 0.40270229966794924,
+      "coherence": 0.524872867162373,
+      "support": 0.0479351601698186,
+      "chi2": 383.28355830370276
+    },
+    {
+      "pattern": "function_for_outcome=provide_information + conversation_stage=introduction",
+      "unified_score": 0.45000777972225536,
+      "pmi": 0.3388321005609808,
+      "coherence": 0.5764470332346162,
+      "support": 0.012041682747973756,
+      "chi2": 970.1398635239897
+    },
+    {
+      "pattern": "function_for_outcome=handle_rejection + domain_outcome=customer_interested",
+      "unified_score": 0.440896527007677,
+      "pmi": -0.4491000062247243,
+      "coherence": 0.6100342654460408,
+      "support": 0.011539945966808181,
+      "chi2": 931.4841425546374
+    },
+    {
+      "pattern": "is_continuation=true + function_for_outcome=clarify_confusion",
+      "unified_score": 0.4382503580273782,
+      "pmi": 0.0791772375192316,
+      "coherence": 0.5665418419536059,
+      "support": 0.014434581242763412,
+      "chi2": 766.6567859139979
+    },
+    {
+      "pattern": "function_for_outcome=handle_rejection + conversation_stage=continue_conversation",
+      "unified_score": 0.43136692686403866,
+      "pmi": -0.9723641481201457,
+      "coherence": 0.6004817669375294,
+      "support": 0.026939405634890005,
+      "chi2": 15.7093340939911
+    },
+    {
+      "pattern": "function_for_outcome=provide_information + cluster=discuss_product_terms",
+      "unified_score": 0.4255883597478556,
+      "pmi": -0.480508917258639,
+      "coherence": 0.5242451011324298,
+      "support": 0.047896565032805864,
+      "chi2": 128.18981808375756
+    },
+    {
+      "pattern": "is_continuation=true + function_for_outcome=address_objection",
+      "unified_score": 0.4102831776957615,
+      "pmi": 0.08289503972312898,
+      "coherence": 0.5182260571594516,
+      "support": 0.010806638363566191,
+      "chi2": 576.1346514281428
+    },
+    {
+      "pattern": "intent=greeting + function_for_outcome=establish_contact",
+      "unified_score": 0.39568333341345635,
+      "pmi": 2.7543056021355437,
+      "coherence": 0.8428986938020169,
+      "support": 0.04488614434581243,
+      "chi2": -1675.3704348350107
+    },
+    {
+      "pattern": "function_for_outcome=establish_contact + conversation_stage=greeting",
+      "unified_score": 0.39046701778614895,
+      "pmi": 2.669609562294264,
+      "coherence": 0.8366485769124549,
+      "support": 0.045889617908143575,
+      "chi2": -1036.1418537155387
+    },
+    {
+      "pattern": "function_for_outcome=provide_information + domain_outcome=information_provided",
+      "unified_score": 0.36423236708317813,
+      "pmi": 0.8199933292250968,
+      "coherence": 0.5794300425342985,
+      "support": 0.2484754920879969,
+      "chi2": -15.0902573497291
+    },
+    {
+      "pattern": "function_for_outcome=handle_rejection + domain_outcome=information_provided",
+      "unified_score": 0.3522954081063047,
+      "pmi": -3.238701596961726,
+      "coherence": 0.6145486042166179,
+      "support": 0.013392512543419529,
+      "chi2": 63.531765430637016
+    },
+    {
+      "pattern": "function_for_outcome=provide_information + cluster=confirm_agreement",
+      "unified_score": 0.3513939641547309,
+      "pmi": 0.528532045321835,
+      "coherence": 0.9408450913098867,
+      "support": 0.01925897336935546,
+      "chi2": -757.3486043476345
+    },
+    {
+      "pattern": "is_continuation=true + function_for_outcome=provide_information",
+      "unified_score": 0.3412565999581918,
+      "pmi": 0.07495666911411009,
+      "coherence": 0.5787314152499965,
+      "support": 0.2509841759938248,
+      "chi2": -33.35030586397619
+    },
+    {
+      "pattern": "is_continuation=true + function_for_outcome=handle_rejection",
+      "unified_score": 0.32118221783498774,
+      "pmi": 0.018817952512846067,
+      "coherence": 0.5984009972343102,
+      "support": 0.21682747973755306,
+      "chi2": -39.87335278116643
+    },
+    {
+      "pattern": "intent=confirmation + function_for_outcome=no_function",
+      "unified_score": 0.28808079267492204,
+      "pmi": 0.474058847034201,
+      "coherence": 0.7447111751007727,
+      "support": 0.0676572751833269,
+      "chi2": -237.1762517337685
+    },
+    {
+      "pattern": "function_for_outcome=no_function + conversation_stage=continue_conversation",
+      "unified_score": 0.27299917012482916,
+      "pmi": 1.0741894198084385,
+      "coherence": 0.6657326234252128,
+      "support": 0.07487456580470861,
+      "chi2": -226.78813321591247
+    },
+    {
+      "pattern": "intent=confirmation + function_for_outcome=establish_contact",
+      "unified_score": 0.27256610270911613,
+      "pmi": 0.13806641572032802,
+      "coherence": 0.801258583807779,
+      "support": 0.027132381319953686,
+      "chi2": -354.2431331299335
+    },
+    {
+      "pattern": "function_for_outcome=establish_contact + domain_outcome=customer_rejected",
+      "unified_score": 0.26823190957544235,
+      "pmi": 0.7090454198842993,
+      "coherence": 0.7349522678106711,
+      "support": 0.04052489386337321,
+      "chi2": -348.73339076920047
+    },
+    {
+      "pattern": "function_for_outcome=confirm_interest + domain_outcome=information_provided",
+      "unified_score": 0.26717379034162464,
+      "pmi": 0.6192117405743606,
+      "coherence": 0.7389620692967893,
+      "support": 0.040331918178309535,
+      "chi2": -185.79313717393003
+    },
+    {
+      "pattern": "function_for_outcome=establish_contact + conversation_stage=continue_conversation",
+      "unified_score": 0.2670043783966902,
+      "pmi": 0.12327013987924447,
+      "coherence": 0.803553497928095,
+      "support": 0.01960632960247009,
+      "chi2": -179.70831031129333
+    },
+    {
+      "pattern": "function_for_outcome=handle_rejection + conversation_stage=do_not_contact_end",
+      "unified_score": 0.26336913860383715,
+      "pmi": 2.084198634118277,
+      "coherence": 0.6660040977872972,
+      "support": 0.022886916248552682,
+      "chi2": -2970.13810969086
+    },
+    {
+      "pattern": "intent=greeting + function_for_outcome=no_function",
+      "unified_score": 0.2573207050134164,
+      "pmi": 0.8196544310003805,
+      "coherence": 0.7346448414153693,
+      "support": 0.023195677344654574,
+      "chi2": -407.88763292641937
+    },
+    {
+      "pattern": "function_for_outcome=no_function + conversation_stage=greeting",
+      "unified_score": 0.25443564727565354,
+      "pmi": 0.7479639974497155,
+      "coherence": 0.7324895478114032,
+      "support": 0.023928984947896564,
+      "chi2": -176.18214950509957
+    },
+    {
+      "pattern": "intent=provide_information + function_for_outcome=provide_information",
+      "unified_score": 0.2530811267843237,
+      "pmi": 1.5804098009468892,
+      "coherence": 0.5518105645126281,
+      "support": 0.10181397143959861,
+      "chi2": -266.7175462644401
+    },
+    {
+      "pattern": "is_continuation=true + function_for_outcome=answer_question",
+      "unified_score": 0.23239565268791676,
+      "pmi": 0.08574996401709424,
+      "coherence": 0.5506930442636049,
+      "support": 0.13720571208027788,
+      "chi2": -6.286854594907438
+    },
+    {
+      "pattern": "function_for_outcome=no_function + domain_outcome=customer_rejected",
+      "unified_score": 0.22141756758369865,
+      "pmi": -0.025119413212645422,
+      "coherence": 0.6794510159009226,
+      "support": 0.048128135854882285,
+      "chi2": -17.29364314728074
+    },
+    {
+      "pattern": "is_continuation=true + function_for_outcome=close_conversation",
+      "unified_score": 0.21541825728557445,
+      "pmi": -0.00418141710114824,
+      "coherence": 0.702940362672135,
+      "support": 0.025434195291393284,
+      "chi2": -289.8889015204459
+    },
+    {
+      "pattern": "function_for_outcome=provide_information + conversation_stage=product_details",
+      "unified_score": 0.2114814229841097,
+      "pmi": 1.3869723622831096,
+      "coherence": 0.5489199294781469,
+      "support": 0.061327672713238135,
+      "chi2": -572.8773746571948
+    },
+    {
+      "pattern": "function_for_outcome=close_conversation + domain_outcome=information_provided",
+      "unified_score": 0.21099944162871279,
+      "pmi": 0.15608502570045646,
+      "coherence": 0.6980476756013642,
+      "support": 0.016788884600540333,
+      "chi2": -611.4765104615363
+    },
+    {
+      "pattern": "function_for_outcome=provide_information + conversation_stage=clarify_continue",
+      "unified_score": 0.20981443503536665,
+      "pmi": -0.1926224959580495,
+      "coherence": 0.5943350650408146,
+      "support": 0.09394056348900039,
+      "chi2": -74.70154673634022
+    },
+    {
+      "pattern": "function_for_outcome=no_function + domain_outcome=call_interrupted",
+      "unified_score": 0.20846578436182517,
+      "pmi": 1.2985124697129424,
+      "coherence": 0.607117668147797,
+      "support": 0.024932458510227712,
+      "chi2": -726.6290895587
+    },
+    {
+      "pattern": "function_for_outcome=establish_contact + domain_outcome=information_provided",
+      "unified_score": 0.19355383463300183,
+      "pmi": -0.9188894778539067,
+      "coherence": 0.7235162855466158,
+      "support": 0.02277113083751447,
+      "chi2": -146.6553204851909
+    },
+    {
+      "pattern": "is_continuation=false + function_for_outcome=handle_rejection",
+      "unified_score": 0.16177242374615083,
+      "pmi": -0.2515394158769122,
+      "coherence": 0.6325674091950554,
+      "support": 0.014704747201852567,
+      "chi2": -605.848285906481
+    },
+    {
+      "pattern": "function_for_outcome=no_function + conversation_stage=clarify_continue",
+      "unified_score": 0.16102762767981416,
+      "pmi": -0.7010095385805021,
+      "coherence": 0.6194379241848632,
+      "support": 0.03990737167116943,
+      "chi2": -19.20863421756267
+    },
+    {
+      "pattern": "function_for_outcome=answer_question + conversation_stage=product_details",
+      "unified_score": 0.15903020563779802,
+      "pmi": 0.6322975927086754,
+      "coherence": 0.5627695057238332,
+      "support": 0.019722115013508297,
+      "chi2": -862.9731591450735
+    },
+    {
+      "pattern": "function_for_outcome=no_function + cluster=discuss_product_terms",
+      "unified_score": 0.1569638963720739,
+      "pmi": -0.20931639564208634,
+      "coherence": 0.5881756001598304,
+      "support": 0.034928598996526436,
+      "chi2": -285.31029167318155
+    },
+    {
+      "pattern": "is_continuation=true + function_for_outcome=schedule_callback",
+      "unified_score": 0.15284916957092262,
+      "pmi": 0.00656815564003992,
+      "coherence": 0.5798204010928015,
+      "support": 0.026592049401775376,
+      "chi2": -169.97318886115752
+    },
+    {
+      "pattern": "intent=confirmation + function_for_outcome=handle_rejection",
+      "unified_score": 0.1525426144987522,
+      "pmi": -1.671223466958623,
+      "coherence": 0.6926122427778136,
+      "support": 0.022732535700501738,
+      "chi2": -94.80183447328893
+    },
+    {
+      "pattern": "intent=confirmation + function_for_outcome=answer_question",
+      "unified_score": 0.13590934137223837,
+      "pmi": -0.8770815355157973,
+      "coherence": 0.6080878244699907,
+      "support": 0.023813199536858357,
+      "chi2": -69.7619947253824
+    },
+    {
+      "pattern": "function_for_outcome=answer_question + domain_outcome=customer_rejected",
+      "unified_score": 0.0751245507176686,
+      "pmi": -2.009363701150311,
+      "coherence": 0.5839607794555504,
+      "support": 0.0109224237746044,
+      "chi2": -57.34679303226181
+    },
+    {
+      "pattern": "intent=question_information + function_for_outcome=provide_information",
+      "unified_score": 0.07150431286791077,
+      "pmi": -1.320833813900355,
+      "coherence": 0.525877294020904,
+      "support": 0.015360864531069085,
+      "chi2": -127.15666951920643
+    }
+  ],
+  "keys": [
+    "unified_score",
+    "pmi",
+    "coherence",
+    "support",
+    "chi2"
+  ],
+  "n_way": 2,
+  "top_n": 1000
+}

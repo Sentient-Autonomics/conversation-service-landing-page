@@ -1,0 +1,313 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Node Model Architecture Demo | Conversation Service">
+  <div class="min-h-screen bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b border-gray-200">
+      <div class="container mx-auto px-6 py-4 max-w-7xl">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center space-x-4">
+            <a href="/" class="text-gray-600 hover:text-gray-900 transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+              </svg>
+            </a>
+            <h1 class="text-2xl font-display font-bold text-gray-900">
+              Node Model Architecture Demo
+            </h1>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-8 max-w-7xl">
+      <!-- Description -->
+      <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-8">
+        <h2 class="text-lg font-semibold text-blue-900 mb-2">How It Works</h2>
+        <p class="text-blue-800 text-sm leading-relaxed">
+          This demo shows how our hierarchical node model routes customer responses to specialized handlers. 
+          Filter by <strong>function outcome</strong> and <strong>conversation stage</strong> to see customer responses, 
+          then select one to view how our system would generate the next agent response with full annotation metadata.
+        </p>
+      </div>
+
+      <!-- Filters -->
+      <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+        <h3 class="text-lg font-semibold text-gray-900 mb-4">Filter Customer Responses</h3>
+        <div class="grid md:grid-cols-2 gap-6">
+          <!-- Function Outcome Filter -->
+          <div>
+            <label for="function-filter" class="block text-sm font-medium text-gray-700 mb-2">
+              Function for Outcome
+            </label>
+            <select id="function-filter" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+              <option value="">All Functions</option>
+            </select>
+          </div>
+
+          <!-- Conversation Stage Filter -->
+          <div>
+            <label for="stage-filter" class="block text-sm font-medium text-gray-700 mb-2">
+              Conversation Stage
+            </label>
+            <select id="stage-filter" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+              <option value="">All Stages</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Results Grid -->
+      <div class="grid lg:grid-cols-2 gap-8">
+        <!-- Speaker 2 Responses List -->
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+          <div class="bg-gradient-to-r from-purple-500 to-pink-500 px-6 py-4">
+            <h3 class="text-lg font-semibold text-white">Customer Responses</h3>
+            <p class="text-purple-100 text-sm mt-1" id="results-count">Select filters to view responses</p>
+          </div>
+          <div id="speaker2-list" class="divide-y divide-gray-200 max-h-[900px] overflow-y-auto">
+            <!-- Results will be inserted here -->
+          </div>
+        </div>
+
+        <!-- Speaker 1 Response Detail -->
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+          <div class="bg-gradient-to-r from-green-500 to-cyan-500 px-6 py-4">
+            <h3 class="text-lg font-semibold text-white">Agent Response</h3>
+            <p class="text-green-100 text-sm mt-1">Select a customer response to see the system's next action</p>
+          </div>
+          <div id="speaker1-detail" class="p-6">
+            <div class="text-center text-gray-400 py-12">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto mb-4 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+              </svg>
+              <p class="text-lg">No response selected</p>
+              <p class="text-sm mt-2">Click on a customer response to view details</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // Data storage
+    let conversationsData = null;
+    let speaker2Turns = [];
+    let allFunctions = new Set();
+    let allStages = new Set();
+
+    // Load data
+    async function loadData() {
+      try {
+        const response = await fetch('/conversation-service-landing/data/conversations.json');
+        conversationsData = await response.json();
+        processData();
+        populateFilters();
+        updateResults();
+      } catch (error) {
+        console.error('Error loading data:', error);
+      }
+    }
+
+    // Process data to extract Customer turns with context
+    function processData() {
+      speaker2Turns = [];
+      
+      conversationsData.conversations.forEach(conv => {
+        conv.turns.forEach((turn, index) => {
+          if (turn.speaker === 'Speaker 2') {
+            // Find the next Agent turn
+            const nextSpeaker1 = conv.turns.slice(index + 1).find(t => t.speaker === 'Speaker 1');
+            
+            // Extract function_for_outcome and conversation_stage
+            const functionAnnotation = turn.annotations.find(a => a.id === 'function_for_outcome');
+            const stageAnnotation = turn.annotations.find(a => a.id === 'conversation_stage');
+            
+            if (functionAnnotation) allFunctions.add(functionAnnotation.label);
+            if (stageAnnotation) allStages.add(stageAnnotation.label);
+            
+            speaker2Turns.push({
+              conversationFile: conv.filename,
+              turnIndex: index,
+              turn: turn,
+              nextSpeaker1: nextSpeaker1,
+              functionLabel: functionAnnotation?.label || 'unknown',
+              stageLabel: stageAnnotation?.label || 'unknown'
+            });
+          }
+        });
+      });
+    }
+
+    // Populate filter dropdowns
+    function populateFilters() {
+      const functionFilter = document.getElementById('function-filter');
+      const stageFilter = document.getElementById('stage-filter');
+      
+      // Sort and add function options
+      Array.from(allFunctions).sort().forEach(func => {
+        const option = document.createElement('option');
+        option.value = func;
+        option.textContent = func.replace(/_/g, ' ');
+        functionFilter.appendChild(option);
+      });
+      
+      // Sort and add stage options
+      Array.from(allStages).sort().forEach(stage => {
+        const option = document.createElement('option');
+        option.value = stage;
+        option.textContent = stage.replace(/_/g, ' ');
+        stageFilter.appendChild(option);
+      });
+    }
+
+    // Update results based on filters
+    function updateResults() {
+      const functionFilter = document.getElementById('function-filter').value;
+      const stageFilter = document.getElementById('stage-filter').value;
+      
+      const filtered = speaker2Turns.filter(item => {
+        const matchFunction = !functionFilter || item.functionLabel === functionFilter;
+        const matchStage = !stageFilter || item.stageLabel === stageFilter;
+        return matchFunction && matchStage;
+      });
+      
+      displaySpeaker2List(filtered);
+    }
+
+    // Display Speaker 2 list
+    function displaySpeaker2List(items) {
+      const list = document.getElementById('speaker2-list');
+      const count = document.getElementById('results-count');
+      
+      count.textContent = `${items.length} response${items.length !== 1 ? 's' : ''} found`;
+      
+      if (items.length === 0) {
+        list.innerHTML = '<div class="p-6 text-center text-gray-500">No responses match the selected filters</div>';
+        return;
+      }
+      
+      list.innerHTML = items.map((item, idx) => {
+        const routingNode = item.turn.annotations.find(a => a.id === 'routing-node');
+        return `
+          <div class="p-4 hover:bg-gray-50 cursor-pointer transition-colors speaker2-item" data-index="${idx}">
+            <div class="flex items-start justify-between mb-2">
+              <span class="text-xs font-medium text-purple-600 bg-purple-100 px-2 py-1 rounded">
+                ${item.conversationFile.split('_').slice(-1)[0]}
+              </span>
+              ${routingNode ? `<span class="text-xs font-mono text-gray-500">Node: ${routingNode.label}</span>` : ''}
+            </div>
+            <p class="text-gray-800 text-sm line-clamp-3">${item.turn.text}</p>
+            <div class="mt-2 flex flex-wrap gap-2">
+              <span class="text-xs px-2 py-1 bg-blue-100 text-blue-700 rounded">
+                ${item.functionLabel.replace(/_/g, ' ')}
+              </span>
+              <span class="text-xs px-2 py-1 bg-green-100 text-green-700 rounded">
+                ${item.stageLabel.replace(/_/g, ' ')}
+              </span>
+            </div>
+          </div>
+        `;
+      }).join('');
+      
+      // Add click handlers
+      document.querySelectorAll('.speaker2-item').forEach((el, idx) => {
+        el.addEventListener('click', () => displaySpeaker1Detail(items[idx]));
+      });
+    }
+
+    // Display Speaker 1 detail
+    function displaySpeaker1Detail(item) {
+      const detail = document.getElementById('speaker1-detail');
+      
+      if (!item.nextSpeaker1) {
+        detail.innerHTML = '<div class="p-6 text-center text-gray-500">No Agent response follows this turn</div>';
+        return;
+      }
+      
+      const turn = item.nextSpeaker1;
+      const routingNode = item.turn.annotations.find(a => a.id === 'routing-node');
+      const speaker1RoutingNode = turn.annotations.find(a => a.id === 'routing-node');
+      
+      // Generate response based on customer's routing node
+      const responseTemplates = {
+        'introduction': "Hello, <Mr./Mrs.> <Customer Name>. Would you wish to learn more about our Shariah-compliant gold facility?",
+        'confirm_interest': "Excellent, <Mr./Mrs.> <Customer Name>. I've noted your interest in the Xtra Dana Syariah facility. Our Islamic banking officer will contact you within 1-2 business days to discuss the details. Is this contact number the best way to reach you?",
+        'close': "Thank you for considering CIMB Niaga's Xtra Dana Syariah, <Mr./Mrs.> <Customer Name>. We look forward to serving your halal investment needs. Barakallahu fiikum and have a blessed day.",
+        'transfer_to_officer': "Thank you for your interest in our Shariah-compliant facility. I'm connecting you with our Islamic banking specialist who can provide detailed information. Please hold for a moment."
+      };
+      
+      const responseText = routingNode && responseTemplates[routingNode.label] 
+        ? responseTemplates[routingNode.label]
+        : turn.text;
+      
+      detail.innerHTML = `
+        <!-- Production Flow Diagram -->
+        <div class="mb-6 bg-gradient-to-r from-blue-50 to-purple-50 p-6 rounded-lg border-2 border-blue-200">
+          <h4 class="text-sm font-semibold text-gray-700 mb-4">Production Flow</h4>
+          <div class="flex flex-col items-center space-y-4">
+            <!-- Customer Input Node -->
+            <div class="text-center w-full">
+              <div class="max-w-md mx-auto bg-purple-500 text-white rounded-lg p-4 shadow-lg">
+                <div class="text-sm font-mono mb-2">${routingNode ? routingNode.label : 'Node'}</div>
+              </div>
+              <div class="text-xs text-gray-600 font-medium mt-2">Customer Input Node</div>
+            </div>
+            
+            <!-- Arrow -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+            </svg>
+            
+            <!-- Agent Response Text -->
+            <div class="text-center w-full">
+              <div class="max-w-2xl mx-auto bg-green-500 text-white rounded-lg p-4 shadow-lg">
+                <div class="text-sm leading-relaxed">${responseText}</div>
+              </div>
+              <div class="text-xs text-gray-600 font-medium mt-2">Agent Response Text</div>
+            </div>
+          </div>
+          <p class="text-xs text-center text-gray-600 mt-4">
+            The <strong>${routingNode ? routingNode.label : 'input node'}</strong> generates the agent's response template
+          </p>
+        </div>
+
+        <!-- Response Text -->
+        <div class="mb-6">
+          <h4 class="text-sm font-semibold text-gray-700 mb-2">Response Text</h4>
+          <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+            <p class="text-gray-800">${responseText}</p>
+          </div>
+        </div>
+        
+        <!-- Cluster Information -->
+        <div class="mb-6">
+          <h4 class="text-sm font-semibold text-gray-700 mb-2">Cluster</h4>
+          <div class="bg-green-50 p-4 rounded-lg border border-green-200">
+            <div class="flex items-center justify-between">
+              <div>
+                <div class="text-xs text-gray-600">ID: <span class="font-mono">${turn.clusters.id}</span></div>
+                <div class="text-sm font-medium text-gray-900 mt-1">${turn.clusters.label.replace(/_/g, ' ')}</div>
+              </div>
+              <div class="text-right">
+                <div class="text-xs text-gray-600">Certainty</div>
+                <div class="text-lg font-bold text-green-600">${(turn.clusters.certainty * 100).toFixed(1)}%</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // Event listeners
+    document.getElementById('function-filter').addEventListener('change', updateResults);
+    document.getElementById('stage-filter').addEventListener('change', updateResults);
+
+    // Initialize
+    loadData();
+  </script>
+</Layout>

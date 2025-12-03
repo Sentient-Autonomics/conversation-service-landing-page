@@ -1,0 +1,163 @@
+---
+// Development Stages component
+const base = import.meta.env.BASE_URL;
+---
+
+<section id="development" class="py-20 bg-white">
+  <div class="container mx-auto px-6 max-w-6xl">
+    <div class="text-center mb-16 space-y-4">
+      <h2 class="text-4xl md:text-5xl font-display font-bold text-gray-900">
+        Research & Development Process
+      </h2>
+      <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+        Our systematic approach transforms raw conversations into an intelligent routing system with superior performance and cost efficiency
+      </p>
+    </div>
+    
+    <div class="space-y-8">
+      <!-- Stage 1 -->
+      <div class="bg-gradient-to-r from-green-50 to-lime-50 rounded-2xl p-8 hover:shadow-xl transition-shadow">
+        <div class="flex flex-col md:flex-row items-start md:items-center gap-6">
+          <div class="flex-shrink-0">
+            <div class="w-16 h-16 bg-gradient-to-br from-accent-lime to-accent-green rounded-xl flex items-center justify-center text-white font-bold text-2xl">
+              1
+            </div>
+          </div>
+          <div class="flex-grow space-y-3">
+            <h3 class="text-2xl font-display font-bold text-gray-900">Conversation Annotation</h3>
+            <p class="text-gray-600">
+              Multi-pass LLM annotation system processes 2,500+ banking conversations with both conversation-level and reply-level annotations. Implements robust checkpointing and parallel processing for 56,300+ line annotations.
+            </p>
+            <div class="flex flex-wrap gap-2">
+              <span class="bg-white px-3 py-1 rounded-full text-sm text-gray-700">Gemini API</span>
+              <span class="bg-white px-3 py-1 rounded-full text-sm text-gray-700">Parallel Processing</span>
+              <span class="bg-white px-3 py-1 rounded-full text-sm text-gray-700">5 Categorization Types</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Stage 2 -->
+      <div class="bg-gradient-to-r from-gray-50 to-gray-100 rounded-2xl p-8 hover:shadow-xl transition-shadow">
+        <div class="flex flex-col md:flex-row items-start md:items-center gap-6">
+          <div class="flex-shrink-0">
+            <div class="w-16 h-16 bg-gradient-to-br from-accent-lime to-accent-green rounded-xl flex items-center justify-center text-white font-bold text-2xl">
+              2
+            </div>
+          </div>
+          <div class="flex-grow space-y-3">
+            <h3 class="text-2xl font-display font-bold text-gray-900">Data Mining & Statistical Analysis</h3>
+            <p class="text-gray-600">
+              Advanced clustering with UMAP + HDBSCAN achieves 0.79 silhouette score for conversations and manages 225 reply clusters. PMI-embedding hybrid scoring identifies statistically significant annotation combinations.
+            </p>
+            <div class="flex flex-wrap gap-2">
+              <span class="bg-white px-3 py-1 rounded-full text-sm text-gray-700">Clustering</span>
+              <span class="bg-white px-3 py-1 rounded-full text-sm text-gray-700">Chi-square Tests</span>
+              <span class="bg-white px-3 py-1 rounded-full text-sm text-gray-700">Taxonomy Building</span>
+            </div>
+            <div class="mt-4">
+              <a href={`${base}/pattern-analysis`} class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-accent-lime to-accent-green text-white font-semibold rounded-lg hover:shadow-lg transition-all transform hover:scale-105 shadow-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+                <span>Explore Pattern Analysis</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Stage 3 -->
+      <div class="bg-gradient-to-r from-gray-50 to-gray-100 rounded-2xl p-8 hover:shadow-xl transition-shadow">
+        <div class="flex flex-col md:flex-row items-start md:items-center gap-6">
+          <div class="flex-shrink-0">
+            <div class="w-16 h-16 bg-gradient-to-br from-accent-lime to-accent-green rounded-xl flex items-center justify-center text-white font-bold text-2xl">
+              3
+            </div>
+          </div>
+          <div class="flex-grow space-y-3">
+            <h3 class="text-2xl font-display font-bold text-gray-900">Synthetic Data Generation</h3>
+            <p class="text-gray-600">
+              Intelligent synthetic conversation generation addresses class imbalance for underrepresented annotation combinations. Incorporates real-world Indonesian banking examples to maintain authenticity.
+            </p>
+            <div class="flex flex-wrap gap-2">
+              <span class="bg-white px-3 py-1 rounded-full text-sm text-gray-700">Class Balancing</span>
+              <span class="bg-white px-3 py-1 rounded-full text-sm text-gray-700">Domain-Specific</span>
+              <span class="bg-white px-3 py-1 rounded-full text-sm text-gray-700">15,000+ Entries</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Stage 4 -->
+      <div class="bg-gradient-to-r from-gray-50 to-gray-100 rounded-2xl p-8 hover:shadow-xl transition-shadow">
+        <div class="flex flex-col md:flex-row items-start md:items-center gap-6">
+          <div class="flex-shrink-0">
+            <div class="w-16 h-16 bg-gradient-to-br from-accent-lime to-accent-green rounded-xl flex items-center justify-center text-white font-bold text-2xl">
+              4
+            </div>
+          </div>
+          <div class="flex-grow space-y-3">
+            <h3 class="text-2xl font-display font-bold text-gray-900">Classification Model Training</h3>
+            <p class="text-gray-600">
+              Multi-task learning architecture handles 225-class classification with balanced batch sampling and inverse frequency weighting. Achieves 99% accuracy target with temperature scaling for confidence calibration.
+            </p>
+            <div class="flex flex-wrap gap-2">
+              <span class="bg-white px-3 py-1 rounded-full text-sm text-gray-700">PyTorch</span>
+              <span class="bg-white px-3 py-1 rounded-full text-sm text-gray-700">Multi-task Learning</span>
+              <span class="bg-white px-3 py-1 rounded-full text-sm text-gray-700">99% Accuracy</span>
+            </div>
+            <div class="mt-4">
+              <a href={`${base}/classification-model-training`} class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-accent-lime to-accent-green text-white font-semibold rounded-lg hover:shadow-lg transition-all transform hover:scale-105 shadow-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+                <span>View Confusion Matrices</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Stage 5 -->
+      <div class="bg-gradient-to-r from-gray-50 to-gray-100 rounded-2xl p-8 hover:shadow-xl transition-shadow">
+        <div class="flex flex-col md:flex-row items-start md:items-center gap-6">
+          <div class="flex-shrink-0">
+            <div class="w-16 h-16 bg-gradient-to-br from-accent-lime to-accent-green rounded-xl flex items-center justify-center text-white font-bold text-2xl">
+              5
+            </div>
+          </div>
+          <div class="flex-grow space-y-3">
+            <h3 class="text-2xl font-display font-bold text-gray-900">Node Model Architecture</h3>
+            <p class="text-gray-600">
+              Carefully constructed response nodes based on taxonomy and routing patterns. Implements semantic routing with LLM fallback mechanisms for edge cases while maintaining deterministic behavior for compliance.
+            </p>
+            <div class="flex flex-wrap gap-2">
+              <span class="bg-white px-3 py-1 rounded-full text-sm text-gray-700">Vector Store</span>
+              <span class="bg-white px-3 py-1 rounded-full text-sm text-gray-700">Semantic Routing</span>
+              <span class="bg-white px-3 py-1 rounded-full text-sm text-gray-700">Compliance Ready</span>
+            </div>
+            <div class="mt-4">
+              <a href={`${base}/node-demo`} class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-accent-lime to-accent-green text-white font-semibold rounded-lg hover:shadow-lg transition-all transform hover:scale-105 shadow-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                </svg>
+                <span>View Interactive Demo</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
