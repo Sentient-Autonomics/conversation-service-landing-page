@@ -117,11 +117,11 @@ import Layout from '../layouts/Layout.astro';
 
     async function loadData() {
       try {
-        const response = await fetch('/conversation-service-landing/data/confusion_matrices.json');
+        const response = await fetch('/conversation-service-landing-page/data/confusion_matrices.json');
         data = await response.json();
         
         // Load model accuracy data
-        const accuracyResponse = await fetch('/conversation-service-landing/data/model_accuracy.json');
+        const accuracyResponse = await fetch('/conversation-service-landing-page/data/model_accuracy.json');
         const accuracyData = await accuracyResponse.json();
         accuracyData.models.forEach(model => {
           modelAccuracyData[model.name] = model;

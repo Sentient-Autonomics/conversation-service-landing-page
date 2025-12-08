@@ -103,7 +103,7 @@ import Layout from '../layouts/Layout.astro';
     // Load data
     async function loadData() {
       try {
-        const response = await fetch('/conversation-service-landing/data/conversations.json');
+        const response = await fetch('/conversation-service-landing-page/data/conversations.json');
         conversationsData = await response.json();
         processData();
         populateFilters();
